@@ -1,5 +1,5 @@
-// DESCRIPTION: Verilator: Systemverilog example module
-// with interface to switch buttons, LEDs, LCD and register display
+// Roteiro 5
+// Leticia Gabriela Calixto
 
 parameter divide_by=100000000;  // divisor do clock de referência
 // A frequencia do clock de referencia é 50 MHz.
@@ -15,11 +15,11 @@ module top(input  logic clk_2,
            output logic [NBITS_INSTR-1:0] lcd_instruction,
            output logic [NBITS_TOP-1:0] lcd_registrador [0:NREGS_TOP-1],
            output logic [NBITS_TOP-1:0] lcd_pc, lcd_SrcA, lcd_SrcB,
-             lcd_ALUResult, lcd_Result, lcd_WriteData, lcd_ReadData, 
+             lcd_ALUResult, lcd_Result, lcd_WriteData, lcd_ReadData,
            output logic lcd_MemWrite, lcd_Branch, lcd_MemtoReg, lcd_RegWrite);
 
   always_comb begin
-    SEG <= SWI;
+    //SEG <= SWI;
     lcd_WriteData <= SWI;
     lcd_pc <= 'h12;
     lcd_instruction <= 'h34567890;
@@ -39,13 +39,40 @@ module top(input  logic clk_2,
     lcd_b <= {SWI, 56'hFEDCBA09876543};
   end
 
-  logic [3:0] contador;
+  parameter zero = 'b10111111;
+  parameter um = 'b00000110;
+  parameter dois = 'b01011011;
+  parameter tres = 'b01001111;
+  parameter quatro = 'b01100110;
+  parameter cinco = 'b01101101;
+  parameter seis = 'b01111101;
+  parameter sete = 'b00000111;
+  parameter oito = 'b01111111;
+  parameter nove = 'b01101111;
+  parameter letraA = 'b01110111;
+  parameter letraB = 'b01111100;
+  parameter letraC = 'b00111001;
+  parameter letraD = 'b01011110;
+  parameter letraE = 'b01111001;
+  parameter letraF = 'b01110001;
 
-  always_ff @(posedge clk_2) begin
-     contador <= contador+1;
-  end
 
-  always_comb LED[0] <= clk_2;  
-  always_comb LED[7:4] <= contador;
 
+  logic reset;
+  logic selecao;
+  logic valor;
+  logic entradaSerial;
+  logic [4:0] entradaParalela;
+  //clockled7
+
+  always_comb begin
+    reset <= SWI[0];
+    selecao <= SWI[1];
+    valor <= SWI[2];
+    entradaSerial <= SWI[3];
+    entradaParalela <= SWI[7:4];
+
+
+  
+ 
 endmodule
